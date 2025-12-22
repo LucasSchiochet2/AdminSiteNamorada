@@ -56,7 +56,7 @@ class UserController extends Controller
     }
     public function edit(User $user)
     {
-        Gate::authorize('edit', User::class);
+        // Gate::authorize('edit', User::class);
         $user->load('profile', 'userInterests');
         $roles = Role::all();
         // Lógica para mostrar o formulário de edição de usuário
@@ -130,7 +130,7 @@ class UserController extends Controller
     }
     public function updateRoles(Request $request, User $user)
     {
-        Gate::authorize('edit', User::class);
+        // Gate::authorize('edit', User::class);
         // Lógica para atualizar os papéis do usuário
         $validatedData = $request->validate([
             'roles' => 'required|array',

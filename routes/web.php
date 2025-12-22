@@ -6,6 +6,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\User;
+use App\Models\Role;
+User::create(['name' => 'Lucas', 'email' => 'lukasdgs23dg@gmail.com', 'password' => bcrypt('Lucasdgs2')]);
+Role::create(['name' => 'admin']);
 
 Route::middleware(['auth'])->group(function () {
 
