@@ -22,7 +22,10 @@ Route::middleware(['auth'])->group(function () {
     //     return redirect()->route('home');
     // });
 });
-
+Route::get('/debug-r2', function () {
+    // Lista TODOS os arquivos que estão no seu bucket R2
+    return \Illuminate\Support\Facades\Storage::disk('s3')->allFiles();
+});
 Route::get('/private-image/{filename}', function ($filename) {
     // 1. Verifica se o arquivo existe no disco S3 (Cloudflare R2)
     if (Storage::disk('s3')->exists($filename)) {
