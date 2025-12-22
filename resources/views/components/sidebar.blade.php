@@ -4,8 +4,6 @@
         <!--begin::Brand Link-->
         <a href="{{ route('home') }}" class="brand-link">
             <!--begin::Brand Image-->
-            <img src={{ Vite::asset('resources/img/AdminLTELogo.png') }} alt="AdminLTE Logo"
-                class="brand-image opacity-75 shadow" />
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
             <span class="brand-text fw-light">Admin</span>
