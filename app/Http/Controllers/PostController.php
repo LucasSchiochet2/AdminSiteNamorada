@@ -45,7 +45,7 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'body' => 'required|string',
-            'photo' => 'nullable|file|image|max:2048',
+            'photo' => 'nullable|file|image|max:10048',
         ]);
 
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
@@ -85,7 +85,7 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'body' => 'required|string',
-            'photo' => 'nullable|file|image|max:2048',
+            'photo' => 'nullable|file|image|max:10048',
         ]);
 
         $data = [

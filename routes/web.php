@@ -5,13 +5,11 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\QuizController;
-use App\Models\Role;
+use Illuminate\Support\Facades\Redirect;
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/', function () {
-        return view('home');
-    })->name('home');
+    Route::redirect('/', '/posts')->name('home');
 
     Route::resource('users', UserController::class)->except(['show'])->names('users');
     Route::put('/users/{user}/profile', [UserController::class, 'updateProfile'])->name('users.updateProfile');

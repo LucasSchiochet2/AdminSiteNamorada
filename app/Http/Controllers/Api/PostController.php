@@ -17,7 +17,7 @@ class PostController extends Controller
                 $q->whereRaw('LOWER(name) = ?', [$categoria]);
             });
         }
-        return response()->json($query->paginate());
+        return response()->json($query->orderBy('id', 'desc')->paginate());
     }
 
     public function show(Post $post)
