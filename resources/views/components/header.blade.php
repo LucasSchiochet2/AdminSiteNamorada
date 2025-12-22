@@ -15,7 +15,7 @@
         <ul class="navbar-nav ms-auto">
             <!--begin::Navbar Search-->
             <li class="nav-item">
-                <a class="nav-link" data-widget="navbar-search" href="anaelucas.com.br" role="button">
+                <a class="nav-link" data-widget="navbar-search" href="https://www.anaelucas.com.br" role="button">
                     Ir para o site
                 </a>
             </li>
