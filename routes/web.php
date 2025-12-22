@@ -27,15 +27,20 @@ Route::get('/debug-r2', function () {
     return \Illuminate\Support\Facades\Storage::disk('s3')->allFiles();
 });
 Route::get('/private-image/{filename}', function ($filename) {
-    // 1. Verifica se o arquivo existe no disco S3 (Cloudflare R2)
-    if (Storage::disk('s3')->exists($filename)) {
-        return Storage::disk('s3')->response($filename);
-    }
-    if (Storage::disk('s3')->exists('public/' . $filename)) {
-        return Storage::disk('s3')->response('public/' . $filename);
+    // 1. Define explicitamente o disco S3
+    $disk = Storage::disk('s3');
+
+    // 2. Verifica na RAIZ (onde o debug mostrou que está)
+    if ($disk->exists($filename)) {
+        return $disk->response($filename);
     }
 
-    // 3. Se não achar, erro 404
+    // 3. Se falhar, tenta limpar caracteres estranhos (espaços, quebras de linha)
+    $cleanName = trim($filename);
+    if ($disk->exists($cleanName)) {
+        return $disk->response($cleanName);
+    }
+
     abort(404);
 });
 
