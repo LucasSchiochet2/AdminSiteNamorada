@@ -24,7 +24,7 @@
         </div>
         <div class="mb-3">
             <label for="Photos" class="form-label">Photos</label>
-            <input type="file" name="photos[]" class="form-control @error('photos') is-invalid @enderror" multiple>
+            <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
             @error('photos')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

@@ -48,15 +48,17 @@ class PostController extends Controller
             'photo' => 'nullable|file|image|max:10048',
         ]);
 
-        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
-                $url = $validatedData['photo']->store();
-            }
-
-        Post::create([
+        $data = [
             'title' => $validatedData['title'],
             'body' => $validatedData['body'],
-            'photo' => $url ?? null,
-        ]);
+        ];
+
+        if(!empty($validatedData['photo']) && $validatedData['photo']->isValid()) {
+            $data['photo'] = $validatedData['photo']->store();
+        }
+
+        Post::create($data);
+        
 
         return redirect()->route('posts.index')->with('status', 'Post created successfully!');
     }
