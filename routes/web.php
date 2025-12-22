@@ -22,24 +22,18 @@ Route::middleware(['auth'])->group(function () {
     //     return redirect()->route('home');
     // });
 });
-Route::get('/private-image/{filename}', function ($filename) {
-    // 1. Tenta descobrir onde o código acha que o arquivo está
-    $pathPrivate = storage_path('app/private_images/' . $filename);
-    $pathPublic = storage_path('app/public/' . $filename);
-    $pathRaiz = storage_path('app/' . $filename);
 
-    return response()->json([
-        'debug' => 'TESTE DE CAMINHO',
-        'arquivo_solicitado' => $filename,
-        'onde_estou_procurando_1' => $pathPrivate,
-        'existe_no_caminho_1?' => file_exists($pathPrivate),
-        'onde_estou_procurando_2' => $pathPublic,
-        'existe_no_caminho_2?' => file_exists($pathPublic),
-        'onde_estou_procurando_3' => $pathRaiz,
-        'existe_no_caminho_3?' => file_exists($pathRaiz),
-        // Lista o que REALMENTE tem na pasta storage/app
-        'arquivos_na_pasta_storage_app' => scandir(storage_path('app')),
-    ]);
+Route::get('/private-image/{filename}', function ($filename) {
+    // 1. Verifica se o arquivo existe no disco S3 (Cloudflare R2)
+    if (Storage::disk('s3')->exists($filename)) {
+        return Storage::disk('s3')->response($filename);
+    }
+    if (Storage::disk('s3')->exists('public/' . $filename)) {
+        return Storage::disk('s3')->response('public/' . $filename);
+    }
+
+    // 3. Se não achar, erro 404
+    abort(404);
 });
 
 Route::domain('{subdomain}.' . config('app.domain'))->middleware(['auth'])->group(function () {
