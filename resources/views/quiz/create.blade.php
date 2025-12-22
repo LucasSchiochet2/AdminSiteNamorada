@@ -1,6 +1,13 @@
 @extends('layouts.app')
 @section('title', 'Create Quiz')
 @section('content')
+    @session('status')
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endsession
+
+    <a href="{{ route('quiz.index') }}" class="btn btn-secondary mb-3">Return</a>
     <form action ="{{ route('quiz.store') }}" method="POST">
         @csrf
         <div class="mb-3">
@@ -25,12 +32,13 @@
         <div class="mb-3">
             <label class="form-label">Answers</label>
             <div id="answers-container">
-                @if(old('answers'))
-                    @foreach(old('answers') as $index => $answer)
+                @if (old('answers'))
+                    @foreach (old('answers') as $index => $answer)
                         <div class="input-group mb-2">
                             <span class="input-group-text">{{ $index === 0 ? 'Correct Answer' : 'Answer' }}</span>
-                            <input type="text" name="answers[]" class="form-control" value="{{ $answer }}" required>
-                            @if($index > 0)
+                            <input type="text" name="answers[]" class="form-control" value="{{ $answer }}"
+                                required>
+                            @if ($index > 0)
                                 <button class="btn btn-outline-danger remove-answer" type="button">Remove</button>
                             @endif
                         </div>

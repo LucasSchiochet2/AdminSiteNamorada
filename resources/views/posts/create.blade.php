@@ -1,7 +1,13 @@
 @extends('layouts.app')
 @section('title', 'Create Post')
 @section('content')
+ @session('status')
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endsession
     <form action ="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+        <a href="{{ route('posts.index') }}" class="btn btn-secondary mb-3">Return</a>
         @csrf
         <div class="mb-3">
             <label for="Title" class="form-label">Title</label>

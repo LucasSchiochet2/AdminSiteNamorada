@@ -92,7 +92,7 @@ class QuizController extends Controller
             'answers' => $validatedData['answers'],
         ]);
 
-        return redirect()->route('quiz.index')->with('status', 'Quiz updated successfully!');
+        return redirect()->back()->with('status', 'Quiz updated successfully!');
     }
 
     /**
@@ -102,6 +102,6 @@ class QuizController extends Controller
     {
         Gate::authorize('edit', User::class);
         $quiz->delete();
-        return redirect()->route('quiz.index')->with('status', 'Quiz deleted successfully!');
+        return redirect()->back()->with('status', 'Quiz deleted successfully!');
     }
 }

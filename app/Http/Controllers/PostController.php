@@ -58,9 +58,9 @@ class PostController extends Controller
         }
 
         Post::create($data);
-        
 
-        return redirect()->route('posts.index')->with('status', 'Post created successfully!');
+
+        return redirect()->back()->with('status', 'Post created successfully!');
     }
 
     /**
@@ -101,7 +101,7 @@ class PostController extends Controller
 
         $post->update($data);
 
-        return redirect()->route('posts.index') ->with('status', 'Post updated successfully!');
+        return redirect()->back()->with('status', 'Post updated successfully!');
     }
 
     public function updateCategory(Request $request, Post $post)
@@ -121,7 +121,7 @@ class PostController extends Controller
             ]);
         }
 
-        return redirect()->route('posts.index')->with('status', 'Post category updated successfully!');
+        return redirect()->back()->with('status', 'Post category updated successfully!');
     }
     /**
      * Remove the specified resource from storage.
@@ -130,6 +130,6 @@ class PostController extends Controller
     {
         Gate::authorize('edit', User::class);
         $post->delete();
-        return redirect()->route('posts.index')->with('status', 'Post deleted successfully!');
+        return redirect()->back()->with('status', 'Post deleted successfully!');
     }
 }
