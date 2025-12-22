@@ -15,8 +15,8 @@
         <ul class="navbar-nav ms-auto">
             <!--begin::Navbar Search-->
             <li class="nav-item">
-                <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                    <i class="bi bi-search"></i>
+                <a class="nav-link" data-widget="navbar-search" href="anaelucas.com.br" role="button">
+                    Ir para o site
                 </a>
             </li>
             <li class="nav-item dropdown user-menu">
