@@ -1,11 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Posts')
+@section('title', 'Trash Posts')
 @section('page-actions')
-    <a href="{{ route('posts.create') }}" class="btn btn-primary">
-        <i class="fas fa-post-plus mr-1"></i> Add Post
-    </a>
-    <a href="{{ route('posts.trash') }}" class="btn btn-danger">
-        <i class="fas fa-post-plus mr-1"></i> Trash Posts
+    <a href="{{ route('posts.index') }}" class="btn btn-primary">
+        <i class="fas fa-post-plus mr-1"></i> Return to Posts
     </a>
 @endsection
 @section('content')
@@ -14,11 +11,6 @@
             {{ session('status') }}
         </div>
     @endsession
-    <form action="{{ route('posts.index') }}" method="GET"class="mb-4 d-flex gap-2">
-        <input type="text" name="keyword" class="form-control max-w:300px" value="{{ request('keyword') }}"
-            placeholder="Search posts...">
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
     <!--begin::Row-->
     <div class="row">
         <div class="col-12">
@@ -26,10 +18,10 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-posts mr-1"></i>
-                        Posts List
+                        Trash Posts List
                     </h3>
                     <div class="card-tools">
-                        <span class="badge bg-info">{{ $posts->total() }} Total Posts</span>
+                        <span class="badge bg-info">{{ $trashedPosts->total() }} Total Posts</span>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -42,23 +34,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($posts as $post)
+                            @foreach ($trashedPosts as $post)
                                 <tr>
                                     <td>{{ $post->id }}</td>
-                                    <td>{{ $post->title}}</td>
+                                    <td>{{ $post->title }}</td>
                                     <td>
+                                        <div class= "d-flex gap-2">
                                         @can('edit', App\Models\User::class)
-                                        <a href="{{ route('posts.edit', $post->id) }}"
-                                            class="btn btn-sm btn-primary">Edit</a>
+                                            <form action="{{ route('posts.restore', $post->id) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-sm btn-primary">
+                                                    Restore</button>
+                                            </form>
                                         @endcan
                                         @can('destroy', App\Models\User::class)
-                                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST"
+                                            <form action="{{ route('posts.forceDelete', $post->id) }}" method="POST"
                                                 style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                             </form>
                                         @endcan
+                                    </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -70,13 +68,14 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="dataTables_info">
-                                Showing {{ $posts->firstItem() }} to {{ $posts->lastItem() }} of {{ $posts->total() }}
+                                Showing {{ $trashedPosts->firstItem() }} to {{ $trashedPosts->lastItem() }} of
+                                {{ $trashedPosts->total() }}
                                 results
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="d-flex justify-content-end">
-                                {{ $posts->links('pagination::bootstrap-4') }}
+                                {{ $trashedPosts->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>

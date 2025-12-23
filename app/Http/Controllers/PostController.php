@@ -132,4 +132,24 @@ class PostController extends Controller
         $post->delete();
         return redirect()->back()->with('status', 'Post deleted successfully!');
     }
+    public function trash()
+    {
+        Gate::authorize('edit', User::class);
+        $trashedPosts = Post::onlyTrashed()->paginate();
+        return view('posts.trash', compact('trashedPosts'));
+    }
+    public function restore($id)
+    {
+        Gate::authorize('edit', User::class);
+        $post = Post::onlyTrashed()->findOrFail($id);
+        $post->restore();
+        return redirect()->back()->with('status', 'Post restored successfully!');
+    }
+    public function forceDelete($id)
+    {
+        Gate::authorize('edit', User::class);
+        $post = Post::onlyTrashed()->findOrFail($id);
+        $post->forceDelete();
+        return redirect()->back()->with('status', 'Post permanently deleted successfully!');
+    }
 }

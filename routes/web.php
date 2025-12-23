@@ -16,6 +16,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/users/{user}/interest', [UserController::class, 'updateInterest'])->name('users.updateInterest');
     Route::put('/users/{user}/roles', [UserController::class, 'updateRoles'])->name('users.updateRoles');
     Route::resource('posts', PostController::class)->except(['show'])->names('posts');
+    Route::get('/posts/trash', [PostController::class, 'trash'])->name('posts.trash');
+    Route::put('/posts/{post}/restore', [PostController::class, 'restore'])->name('posts.restore');
+    Route::delete('/posts/{post}/force-delete', [PostController::class, 'forceDelete'])->name('posts.forceDelete');
     Route::put('/posts/{post}/category', [PostController::class, 'updateCategory'])->name('posts.updateCategory');
     Route::resource('quiz', QuizController::class)->except(['show'])->names('quiz');
     // Route::fallback(function () {
